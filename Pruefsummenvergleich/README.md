@@ -64,13 +64,13 @@ Die Lauzeitmessung erfolgt mit Hilfe der CTC, Kanal 2. Es wir alle 20 ms ein Int
 Damit ergibt sich eine Ungenauigkeit von &#x00B1; 20 ms.
 Mit einer 16-Bit Zählvariable läßt sich ein Messbereich bis 5:27 min:s abdecken.
 
-| Algorithmus  | Laufzeit C | Laufzeit ASM
-| :---         | :--------: | :----------:
-| CRC16        | 7940 ms    | 840 ms
-| Fletcher 255 | 7760 ms    | 280 ms
-| Fletcher 256 | 1020 ms    | 200 ms
-| Fletcher KC  | 1020 ms    | 200 ms
-| SUM16        |  960 ms    | 180 ms
+| Algorithmus  | Laufzeit C | Laufzeit ASM | ca. Faktor |
+| :---         |  --------: |  ----------: |  -----:    |
+| CRC16        | 7940 ms    | 840 ms       | 10         |
+| Fletcher 255 | 7760 ms    | 280 ms       | 28         |
+| Fletcher 256 | 1020 ms    | 200 ms       | 5          |
+| Fletcher KC  | 1020 ms    | 200 ms       | 5          |
+| SUM16        |  960 ms    | 180 ms       | 5          |
 
 
 [^1]: https://de.wikipedia.org/wiki/Zyklische_Redundanzpr%C2%BCfung#Berechnung_einer_CRC-Pr%C3%BCfsumme_in_C_und_Pascal_bzw._Delphi
