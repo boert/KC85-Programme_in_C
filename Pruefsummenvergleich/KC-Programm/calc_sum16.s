@@ -1,6 +1,3 @@
-;; Quelle:
-;; refresh.c
-
 ; sdcccall(1)
 ; Parameters 16 bit + 16 bit
 ; HL + DE
@@ -21,34 +18,31 @@
 .globl _calc_sum16_asm
 _calc_sum16_asm::
 
-    exx
-    ld  b, #0       ; high byte
-    ld  hl, #0      ; Summe zuruecksetzen
-    exx
+    ; SUM16 in reg CA
+    xor a
+    ld  c, a
 
-    ; prepare fast loop:
-    ; http://map.grauw.nl/articles/fast_loops.php
+    ; prepare fast loop
+    ; https://map.grauw.nl/articles/fast_loops.php
+    ; Number of loops is in DE
     ld  b, e
     dec de
     inc d
 
 loop:
-    ld  a, (hl)     ; neues Byte holen
+    add a, (hl)
 
-    exx
-    ld  c, a
-    add hl, bc      ; addieren
-    exx
+    jr nc, skip_inc
+    inc c
 
+skip_inc:
     inc hl          ; naechste Adresse
 
     djnz loop       ; loop counter
     dec d
     jr  nz, loop
 
-    exx             ; Ergebnis von HL' nach DE
-    push hl
-    exx
-    pop  de
+    ld  e, a         ; low byte
+    ld  d, c         ; high byte
 
     ret
