@@ -2,8 +2,9 @@
 Programmbeispiele zur Verwendung des Small Device C Compiler (SDCC) am KC85/4
 
 - Hello World  
-- Fraktale im Textmodus
+- Fraktale im Textmodus  
 - Zeitmessung (mit CTC)  
+- Prüsummenvergleich (C vs. ASM)  
 
 
 Das Projekt zeigt den Einsatz des SDCC-Compilers um KCC-Dateien für die Kleincomputer aus Mühlhausen (KC85/3, KC85/4, KC85/5) zu erzeugen.
