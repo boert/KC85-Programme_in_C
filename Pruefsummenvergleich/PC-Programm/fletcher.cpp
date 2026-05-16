@@ -83,15 +83,32 @@ uint16_t calc_crc16( const std::vector<uint8_t>& data)
 
 uint32_t calc_adler32( const std::vector<uint8_t>& data)
 {
-    uint32_t  a = 1;
-    uint32_t  b = 0;
+    uint32_t a   = 1;
+    uint32_t b   = 0;
+    uint32_t mod = 65521;
 
     for( uint16_t index = 0; index < data.size(); index++)
     {
-        a = ( a + data[ index]) % 65521;
-        b = ( a + b           ) % 65521;
+        a = ( a + data[ index]) % mod;
+        b = ( a + b           ) % mod;
     }
     return(( (uint32_t) b << 16) | a);
+}
+
+
+// https://github.com/RobTillaart/Adler/blob/master/Adler16.cpp
+uint16_t calc_adler16( const std::vector<uint8_t>& data)
+{
+    uint16_t a   = 1;
+    uint16_t b   = 0;
+    uint16_t mod = 251; //  largest prime below 2^8
+
+    for( uint16_t index = 0; index < data.size(); index++)
+    {
+        a = ( a + data[ index]) % mod;
+        b = ( a + b           ) % mod;
+    }
+    return(( (uint16_t) b << 8) | a);
 }
 
 
@@ -180,8 +197,9 @@ void process_block
 {
     std::print( "{}", comment);
     std::print( "    Länge {}", data.size());
-    std::print( "    Adler-32 {:08X}", calc_adler32( data));
     std::print( "    crc16 {:04X}", calc_crc16( data));
+    //std::print( "    Adler-32 {:08X}", calc_adler32( data));
+    std::print( "    Adler-16 {:04X}", calc_adler16( data));
     std::print( "    fletcher 255 {:04X}", calc_fsum_255( data));
     std::print( "    fletcher 256 {:04X}", calc_fsum_256( data));
     std::print( "    fletcher KC {:04X}", calc_fsum_kc( data));
