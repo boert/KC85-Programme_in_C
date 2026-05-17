@@ -38,14 +38,11 @@ _adler16_loop:
 
       ; sum1 += data
       add a, e
-      jr nc, test1
-      sub a, #251
-      cp #251
-      jr c, _nomod1
+      jr nc, test1  ; CY=1 --> overflow
       sub a, #251
 test1:
       cp #251
-      jr c, _nomod1
+      jr c, _nomod1 ; CY=0 --> accu is same or greater
       sub a, #251
 _nomod1:
       ld e, a
@@ -54,12 +51,9 @@ _nomod1:
       add a, d
       jr nc, test2
       sub a, #251
-      cp #251
-      jr c, _nomod2    ; C=1 --> overflow
-      sub a, #251
 test2:
       cp #251
-      jr c, _nomod2     ; C=1 --> less than A
+      jr c, _nomod2 ; C=1 --> less than A
       sub a, #251
 _nomod2:
       ld d, a
